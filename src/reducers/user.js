@@ -5,7 +5,7 @@ const initialState = {
 
 let handler = {};
 
-handler["SET_NAME"] = (state, action) => {
+handler["SET_NAME_FULFILLED"] = (state, action) => {
   return {
     ...state,
     name: action.payload

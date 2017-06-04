@@ -3,8 +3,12 @@ let exports = {};
 exports.setName = (name) => {
   return {
     type: "SET_NAME",
-    payload: name
-  };
+    payload: new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(name);
+      }, 2000);
+    })
+  }
 };
 
 exports.setAge = (age) => {
