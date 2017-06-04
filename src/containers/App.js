@@ -1,41 +1,40 @@
 import React, { Component } from 'react';
-import User from '../components/User';
+import { User } from '../components/User';
+import { connect } from 'react-redux';
+import { UserAction } from '../actions';
 
-class App extends from Component {
+class App extends Component {
 
-    render () {
-        return (
-            <User changeName={(name) => this.props.setName(name)}/>
-        )
-    }
-    
+  render() {
+    return (
+      <div>
+        <User user={this.props.user} changeName={(name) => this.props.setName(name)} />
+      </div>
+    )
+  }
+
 }
 
 const mapStateToProps = (state) => {
-    return {
-        user: state.user,
-        math: state.math
-    };
+  console.log(state);
+  return {
+    user: state.User,
+    math: state.Math
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-    let exports = {};
+  let exports = {};
 
-    exports.setName = (name) => {
-        dispatch({
-            type: "SET_NAME",
-            payload: name
-        });
-    };
+  exports.setName = (name) => {
+    dispatch(UserAction.setName(name));
+  };
 
-    exports.setAge = (age) => {
-        dispatch({
-            type: "SET_AGE",
-            payload: age
-        });
-    };
+  exports.setAge = (age) => {
+    dispatch(UserAction.setAge(age));
+  };
 
-    return exports;
+  return exports;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
