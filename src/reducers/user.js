@@ -19,8 +19,6 @@ handler["SET_AGE"] = (state, action) => {
   }
 };
 
-console.log(handler);
-
 const User = (state = initialState, action) =>
   handler[action.type] ? handler[action.type](state, action) : state;
 
