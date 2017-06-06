@@ -12,9 +12,11 @@ export const TodoForm = (props) => {
   return (
     <form onSubmit={onSubmitForm}>
       <div className="form-group">
+        <label htmlFor="todo_input">Content</label>
         <input className="form-control"
-          value={ value }
-          onChange={(e) => onChange(e.target.value)} />
+          id="todo_input"
+          value={ value.content }
+          onChange={(e) => onChange({ ...value, content: e.target.value })} />
       </div>
     </form>
   );

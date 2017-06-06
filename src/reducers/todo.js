@@ -1,13 +1,13 @@
+import _ from 'lodash';
+
+
+const intitialTodo = {
+  content: ""
+};
+
 const initialState = {
-  todoForm: "",
-  todos: [
-    { id: 1, content: "JavaScript Next", isCompleted: false },
-    { id: 2, content: "Babel ES6", isCompleted: false },
-    { id: 3, content: "Shipping Connection", isCompleted: false },
-    { id: 4, content: "Embedded", isCompleted: false },
-    { id: 5, content: "Simultaneously", isCompleted: false },
-    { id: 6, content: "Great Evil", isCompleted: false },
-  ]
+  todoForm: intitialTodo,
+  todos: []
 };
 
 
@@ -15,6 +15,10 @@ let handler = {};
 
 handler["GET_TODO_FULFILLED"] = (state, action) => {
   console.log(action.payload);
+  return {
+    ...state,
+    todos: action.payload
+  };
 };
 
 /**
@@ -31,25 +35,60 @@ handler["TODO_INPUT_CHANGED"] = (state, action) => {
 
 };
 
-handler["ADD_TODO"] = (state, action) => {
+handler["ADD_TODO_FULFILLED"] = (state, action) => {
   if (!!action.payload) {
-
-    const newTodo = {
-      id: new Date().getTime(),
-      content: action.payload,
-      isCompleted: false
-    };
-
+    const newTodo = action.payload;
     return {
       ...state,
-      todoForm: "",
-      todos: [...state.todos, newTodo]
+      todoForm: intitialTodo,
+      todos: [
+        newTodo, ...state.todos
+      ]
     };
   }
   return state;
 };
 
-  const Todo = (state = initialState, action) =>
+handler["EDIT_TODO_FULFILLED"] = (state, action) => {
+
+  return {
+    ...state,
+    todoForm: action.payload
+  };
+
+};
+
+handler["SAVE_TODO_FULFILLED"] = (state, action) => {
+
+  const todo = action.payload;
+
+  let todos = state.todos.map(item => { return {...item}; });
+  _.remove(todos, (item) => item.id === todo.id);
+
+  return {
+    ...state,
+    todoForm: intitialTodo,
+    todos: [
+      todo, ...todos
+    ]
+  };
+};
+
+handler["DESTROY_TODO_FULFILLED"] = (state, action) => {
+
+  const todo = action.payload;
+
+  let todos = state.todos.map(item => { return { ...item }; });
+  _.remove(todos, (item) => item.id === todo.id);
+
+  return {
+    ...state,
+    todos: [ ...todos ]
+  };
+
+};
+
+const Todo = (state = initialState, action) =>
   handler[action.type] ? handler[action.type](state, action) : state;
 
 export default Todo;
