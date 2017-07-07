@@ -15,7 +15,7 @@ class Main extends Component {
 
     return (
       <div className="main-wrapper">
-        <h1 className="app-title">MY FUCKING TODO APP</h1>
+        <h1 className="app-title">The First Todo App</h1>
         <TodoForm
           value={ this.props.todo.todoForm }
           onSubmit={ this.props.submitTodo }
